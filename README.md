@@ -2,15 +2,15 @@
 
 TODO General Information about this repository
 
-## Account Framework
+## [AccountFramework](AccountFramework/README.md)
 
 TODO: short description, more info in separate README
 
-## PythonCrawler
+## [PythonCrawler](PythonCrawler/README.md)
 
 TODO: short description, more info in separate README
 
-## TypeScriptCrawler
+## [TypeScriptCrawler](TypeScriptCrawler/README.md)
 
 TODO: short description, more info in separate README
 
