@@ -72,7 +72,7 @@ services:
     secrets:
       - db_password
     ports:
-      - '55433:5432'  # Postgres database port
+      - '55432:5432'  # Postgres database port
     volumes: 
       - db:/var/lib/postgresql/data
 

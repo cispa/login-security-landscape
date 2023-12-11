@@ -34,7 +34,7 @@ For our work, we distinguish between the modules:
 In order to run experiments, open the shell script `experiment.sh` and configure all options in there for your needs. Additionally, it might be necessary to adjust further properties in the `config/index.ts` file. In that file, you can specify options of the crawler concerning how to perform the crawl such as crawling timeouts.
 
 #### Choosing the experiment to run
-- To perform the **cxss** experiment, head into the `docker-compose.yml` file and set the experiment environment variable `EXPERIMENT` to `cxss`.
+- To perform the **cxss** experiment, head into the `docker-compose.yaml` file and set the experiment environment variable `EXPERIMENT` to `cxss`.
 - To perform the **pmsecurity** experiment, set the environment variable `EXPERIMENT` to `pmsecurity`. It is enabled by default in the docker configuration.
 
 #### Preparing the database and environment
@@ -119,7 +119,7 @@ To start your experiment, simply execute your crafted `experiment.sh` script, wh
 After all crawlers are started, it then starts the ZMQ listener if enabled. By default, the crawlers run forever and attempt to fetch new work from the database, however this functionality can be toggled by removing the `--forever` option in the call to `spawn.sh`.
 
 [!WARNING]
-If you do not use the docker setup, make sure to specify the required environment variables for the shell script accordingly (as visible in the `docker-compose.yml` file)
+If you do not use the docker setup, make sure to specify the required environment variables for the shell script accordingly (as visible in the `docker-compose.yaml` file)
 
 ### 3. Stopping an experiment
 
@@ -175,7 +175,7 @@ Before performing analysis, make sure to kill all running processes relating to 
         ├── zmq                     # Command-line arguments read via argparse
             ├── zmq-listener.ts     # Listener script that fetches session from ZMQ connection
             ├── zmq-wrapper.ts      # Wrapper for ZMQ calls called from listener, also contains demo ZMQ server
-    ├── docker-compose.yml          # Docker compose for simple startup
+    ├── docker-compose.yaml          # Docker compose for simple startup
     ├── Dockerfile                  # Dockerfile for building container
     ├── experiment-analysis.sh      # Starts the experiment analysis script
     ├── experiment-stop.sh          # Terminate all running crawlers (specify experiment name as argument to stop child processes)

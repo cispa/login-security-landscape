@@ -12,9 +12,9 @@ services:
       - vnc_password
       - db_password
     ports:
-      - '55900:5900'
-      - '55432:5432'
-      - '58888:8888'
+      - '55902:5900'
+      - '55433:5432' # TODO: move to a DB container
+      - '58888:8888' # Jupyer Lab Server; TODO: maybe move to an optional container as well?
 
 secrets:
   db_password:

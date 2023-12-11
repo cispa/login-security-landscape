@@ -1,16 +1,18 @@
-# PyCrawler
+# PythonCrawler
 
-PyCrawler is a Python-based extendible and modular crawling framework that uses the [Playwright](https://playwright.dev/) browser automation tool.
+PythonCrawler is a Python-based extendible and modular crawling framework that uses the [Playwright](https://playwright.dev/) browser automation tool.
 
 ## Requirements
 1. Docker
 2. A VNC viewer (e.g. RealVNC)
 
 ## Installation Instructions
-1. Run `python create_secrets.py` file and edit the default passwords in the `secrets` directory.
+1. Run `python3 create_secrets.py` file and edit the default passwords in the `secrets` directory.
 2. Build the container with `docker compose up -d --build`
 3. After the docker container launches, wait for it to complete the database and VNC setup
-4. Connect to the VNC container at localhost:55900 and to the database at localhost:55432
+4. Open a shell within the docker container, all following run commands assume they are run within that shell: `docker compose exec -u baf_user -it baf /bin/bash` 
+5. Optional: Connect to the VNC container at `localhost:55900`
+6. Optional: Connect to the database at `localhost:55432`
 
 ## Demo Mode
 
@@ -18,7 +20,7 @@ You can start the Javascript (`./demo/demo_inclusion.sh`) and Header (`./demo/de
 
 The experiment results are stored in a PostgreSQL database.
 
-Run the `./demo/demo_analysis.sh` script to start a jupyter notebook instance. You can connect to it through port 58888. There you can execute the `Headers.ipynb` and `Inclusion.ipynb` jupyter files to see a demonstration of how the data analysis can be done.
+Run the `./demo/demo_analysis.sh` script to start a jupyter notebook instance. You can connect to it through port http://localhost:58888. There you can execute the `Headers.ipynb` and `Inclusion.ipynb` jupyter files to see a demonstration of how the data analysis can be done.
 
 ## Starting the Crawl
 Copy the `config-example.py` to `config.py` and edit it to specify the ZMQ socket and additional crawling parameters.

@@ -5,6 +5,10 @@ This repository contains the code related to our paper "To Auth or Not To Auth? 
 Our code is organized into three distinct modules that can all run independently or together.
 For a high-level description of the modules please see below. Detailed instructions for each module can be found in the respective folders.
 
+## Setup
+
+Run `git clone https://github.com/cispa/login-security-landscape --recurse-submodules` then follow the instructions in the respective subproject folders.
+
 ## [AccountFramework](AccountFramework/README.md)
 
 The AccountFramework helps conducting experiments with logged-in sessions.
