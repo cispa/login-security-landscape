@@ -1,0 +1,44 @@
+version: '3.8'
+
+# Database configuration
+x-dbenv: &dbenv
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+
+# Experiment configuration
+x-experiment: &experiment
+  EXPERIMENT: pmsecurity # Change to cxss for client-side XSS experiment
+  ZMQ_HOST: tcp://127.0.0.1:1234
+  ZMQ_EXPERIMENT: experiment
+  ZMQ_ENABLE: "true"
+  DEMO_MODE: "true"
+  START_INSECURE_WEBSERVER: "false"
+  VNC_PASSWORD: abc
+
+services:
+  typescript-crawler-db:
+    container_name: typescript-crawler-db
+    image: postgres:16.1
+    restart: always
+    ports:
+      - 55434:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment: *dbenv
+  typescript-crawler:
+    container_name: typescript-crawler
+    build:
+      context: .
+      args:
+        <<: *experiment
+    depends_on:
+      typescript-crawler-db:
+        condition: service_healthy
+    ports:
+      - 55903:5900
+    environment:
+      <<: [ *dbenv, *experiment ]
+      POSTGRES_HOST: typescript-crawler-db

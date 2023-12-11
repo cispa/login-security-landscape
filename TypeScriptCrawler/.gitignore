@@ -1,0 +1,10 @@
+node_modules/
+/dist/
+err/
+log/
+
+.env
+
+*.out
+
+__pycache__/

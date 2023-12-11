@@ -1,0 +1,91 @@
+version: '3.8'
+services:
+  # Home of the Account Framework itself and the automated workers
+  accf-auto:
+    build: .
+    entrypoint: "/bin/bash"
+    command: "entrypoint.sh"
+    ports:
+      - '55900:5900' # VNC (remote desktop)
+      - '5555:5555' # ZMQ (account framework api)
+    security_opt:
+      - "seccomp:seccomp.json"
+    environment:
+      - VNC_PASSWORD_FILE=/run/secrets/vnc_password # Password for remote desktop.
+      # Postgres settings
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=accounts
+      - DB_HOST=db
+      - DB_PORT=5432 # Internal DB port if using the provided DB (as they are in the same docker network)
+      - ZMQ_PORT=5555 # ZMQ port (must match exposed port above)
+      - BW_ENV_FILE=/run/secrets/bw_env # Secrets for bitwarden
+      - IDENTITY_FILE=/run/secrets/identity # Identity information
+      - AUTO_VERIFY_TIMOUT=12 # Sessions are valid for a maximum of 12 hours (when not used, until the next verification is scheduled)
+      - MANUAL_VERIFY_TIMEOUT=12 # Same as above but for manually verified sessions
+      - TIMEOUT_EXP_SESSION=24 # How many hours an experiment can hold a session before it automatically is unlocked
+    secrets:
+      - vnc_password
+      - db_password
+      - bw_env
+      - identity
+    volumes:
+      - ./app:/app
+  
+  # Home of the first manual worker; If more a needed: copy the code below and use different external VNC ports to create worker2, worker3, ...
+  worker1:
+    build: .
+    entrypoint: "/bin/bash"
+    command: "entrypoint.sh"
+    ports:
+      - '55901:5900' # VNC (remote desktop)
+    security_opt:
+      - "seccomp:seccomp.json"
+    environment:
+      - WORKER=True # Do not run the account framework instance
+      - VNC_PASSWORD_FILE=/run/secrets/vnc_password # Password for remote desktop.
+      # Postgres settings
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=accounts
+      - DB_HOST=db
+      - DB_PORT=5432 # Internal DB port if using the provided DB (as they are in the same docker network)
+      - ZMQ_PORT=5555 # ZMQ port (must match exposed port above)
+      - BW_ENV_FILE=/run/secrets/bw_env # Secrets for bitwarden
+      - IDENTITY_FILE=/run/secrets/identity # Identity information
+      - use_bitwarden=True  # Whether to use bitwarden-assited manual mode
+    secrets:
+      - vnc_password
+      - db_password
+      - bw_env
+      - identity
+    volumes:
+      - ./app:/app
+
+  db:
+    image: postgres:16.1
+    restart: always
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: accounts
+    secrets:
+      - db_password
+    ports:
+      - '55433:5432'  # Postgres database port
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+secrets:
+  vnc_password:
+    file: secrets/vnc_password.txt
+  db_password:
+    file: secrets/db_password.txt
+  bw_env:
+    file: secrets/bw_env.sh
+  identity:
+    file: secrets/identity.sh
+
+volumes:
+  db:
+    driver: local

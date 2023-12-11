@@ -1,0 +1,14 @@
+Flask==2.2.2
+peewee==3.15.4
+playwright==1.40.0
+bullet==2.2.0
+psycopg2==2.9.3
+requests==2.28.1
+numpy==1.24.0
+scikit-learn==1.2.0
+tld==0.12.6
+pyzmq==25.0.0
+watchdog==2.2.1
+tranco==0.6
+pandas==2.0.2
+httpx==0.24.1

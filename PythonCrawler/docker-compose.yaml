@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  baf:
+    build: .
+    container_name: baf
+    environment:
+      VNC_PASSWORD_FILE: /run/secrets/vnc_password
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: experiment
+    secrets:
+      - vnc_password
+      - db_password
+    ports:
+      - '55900:5900'
+      - '55432:5432'
+      - '58888:8888'
+
+secrets:
+  db_password:
+    file: secrets/db_password.txt
+  vnc_password:
+    file: secrets/vnc_password.txt

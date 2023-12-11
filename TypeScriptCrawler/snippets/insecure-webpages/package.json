@@ -1,0 +1,15 @@
+{
+  "name": "insecure-webpages",
+  "version": "1.0.0",
+  "description": "Basic node server that hosts some vulnerable websites for crawler testing.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Thomas Helbrecht",
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.18.2"
+  }
+}
