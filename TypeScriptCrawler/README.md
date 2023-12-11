@@ -1,7 +1,7 @@
-# typescript-crawler
+# TypeScriptCrawler
 
 This repository contains the typescript crawler used in the client-side XSS and PostMessage security experiments in our IEEE S&P 2024 paper "To Auth or Not To Auth?  
-A Comparative Analysis of the Pre- and Post-Login Security Landscape". You can find the final version of the paper [here](#TODO). The crawler uses sessions from the framework for visiting sites in logged-in and logged-out state. Additionally, the crawler supports a demo mode, that allows to run the experiments without having to to setup a ZMQ server for demonstration purposes.
+A Comparative Analysis of the Pre- and Post-Login Security Landscape". You can find the final version of the paper [here](#TODO). The crawler uses sessions from the account framework for visiting sites in logged-in and logged-out state. Additionally, the crawler supports a demo mode, that allows to run the experiments without having to to setup a ZMQ server for demonstration purposes.
 
 ## Docker Setup
 
@@ -125,8 +125,9 @@ If you do not use the docker setup, make sure to specify the required environmen
 
 For stopping an experiment, execute the `experiment-stop.sh` script with the name of your module as an argument. To access the containers shell, run:
 
+TODO: this should be above, we need it for all commands? Also run stuff directly and then explain settings?!
 ```bash
-docker exec -u typescriptcrawler -it typescript-crawler  /bin/bash
+docker compose exec -u typescriptcrawler -it typescript-crawler  /bin/bash
 ```
 
 Afterwards, you can run the script:

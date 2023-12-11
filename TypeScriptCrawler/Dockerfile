@@ -73,7 +73,7 @@ RUN if [ "$EXPERIMENT" = "cxss" ]; then \
 WORKDIR /typescript-crawler 
 
 # Fetch submodules (pmforce+persistent-clientside-xss)
-RUN git submodule update --init --recursive
+#RUN git submodule update --init --recursive
 
 # Install dependencies for cxss experiment (exploit generator)
 WORKDIR /typescript-crawler/snippets/cxss/persistent-clientside-xss/src 

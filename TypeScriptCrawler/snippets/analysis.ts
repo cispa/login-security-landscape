@@ -42,6 +42,6 @@ const pmsecurityAnalysis = async () => {
     } else if (config.dynamic.module === "pmsecurity") {
         await pmsecurityAnalysis();
     } else {
-        Logging.error("Unsupported/missing module name specified for analysis")
+        Logging.error("Unsupported module name specified for analysis. Supported modules are cxss and pmsecurity.")
     }
 })()
