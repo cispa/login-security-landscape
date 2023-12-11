@@ -159,9 +159,30 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Visual Studio Code
-#.vscode/
+auth/
+har/
+login/
+register/
+validate/
+trace/
+*.env
+.tranco/
 
-config.py
-secrets/
 logs/
+acc/
+secrets/
+*.har
+dumps/
+*.csv
+*.csv.gz
+node_modules/
+dirs/
+bitwarden/
+test_state.json
+core
+/dist/
+err/
+log/
+.env
+*.out
+__pycache__/
