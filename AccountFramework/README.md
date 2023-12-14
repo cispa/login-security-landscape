@@ -81,13 +81,13 @@ We recommend running it in the beginning to get an overview of the framework. Ho
 - First open a shell in the account framework container: `docker compose exec -u demouser -it accf-auto  /bin/bash`
 - Run `source /run/secrets/identity && python3 demo_task_creation.py` within the shell to create demo login and registration tasks.
 - Optional:
-    - Connect to the automated worker with any VNC viewer on port `55900` with password [vnc_password.txt](secrets/vnc_password.txt) to watch the automated worker process login and validation tasks. The automated workers automatically run in an endless loop trying to fetch and process tasks.
+    - Connect to the automated worker container with any VNC viewer on port `55900` with password [vnc_password.txt](secrets/vnc_password.txt) to watch the automated worker process login and validation tasks. The automated workers automatically run in an endless loop trying to fetch and process tasks.
     - Connect to the database with any database viewer and watch the `login_tasks` and `sessions` tables.
 - Perform the demo manual tasks:
-    - Connect to the manual worker with any VNC viewer on port `55901` with password [vnc_password.txt](secrets/vnc_password.txt)
+    - Connect to the manual worker container with any VNC viewer on port `55901` with password [vnc_password.txt](secrets/vnc_password.txt)
     - Open a terminal on the virtual screen: right click -> applications -> shells -> bash (maximize)
     - Run `python3 work_manual.py` and follow the instructions in the terminal (more details about the manual mode below)
-- Within the non-VNC terminal run `python3 api_demo.py` to test the client functionality of the API
+- Within the non-VNC terminal run `python3 api_demo.py` to test the client functionality of the API. If the output is `No session available`, the automated worker is probably still logging in or validating the demo sessions. Please wait a bit and try again.
 - Run `docker compose logs --tail 50 accf-auto` to see the logging output of the API and similar
 
 ### Preparation (Search for Registration and Login Forms)
