@@ -111,6 +111,7 @@ def main(num_workers: int):
     p = Pool(processes=num_workers)
     # Main loop
     print_sleep = True
+    print(f"Start run_auto with {num_workers} workers.")
     with Tee(f"{LOG_BASE}_0_main.log", "main"):
         while True:
             # Iterate through tables in order of priority

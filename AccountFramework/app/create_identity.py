@@ -18,4 +18,4 @@ identity: db.Identity = db.Identity.get_or_create(
     phone=os.getenv("i_phone"),
 )[0]
 
-print(identity)
+print(f"The id of the default identity is: {identity}")
