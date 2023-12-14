@@ -14,9 +14,6 @@ RUN apt-get install -y build-essential software-properties-common
 RUN mkdir -p /typescript-crawler
 RUN mkdir -p /typescript-crawler-data
 RUN mkdir -p /foxhound
-WORKDIR /typescript-crawler 
-# Copy project source
-COPY . . 
 
 # Install VNC and fluxbox to interact with headfull runs
 RUN apt-get install -y x11vnc fluxbox
@@ -25,7 +22,7 @@ RUN apt-get install -y x11vnc fluxbox
 RUN apt-get install -y postgresql-client
 
 # Install python3 and 
-RUN apt-get install -y python3.10 python3.10-dev python3-pip
+RUN apt-get install -y python3.10 python3-pip
 # Install dependencies for pmsecurity experiment (pmforce)
 RUN pip3 install z3-solver==4.8.7.0 ply
 
@@ -70,8 +67,11 @@ RUN if [ "$EXPERIMENT" = "cxss" ]; then \
 
 WORKDIR /typescript-crawler 
 
+# Copy project source
+COPY . . 
+
 # Fetch submodules (pmforce+persistent-clientside-xss)
-#RUN git submodule update --init --recursive
+RUN git submodule update --init --recursive
 
 # Install dependencies for cxss experiment (exploit generator)
 WORKDIR /typescript-crawler/snippets/cxss/persistent-clientside-xss/src 
@@ -83,7 +83,10 @@ WORKDIR /typescript-crawler
 # Install dependencies of crawler code (npm)
 RUN npm install
 
-# Make required shell scripts executable
+# Make entrypoint script executable
+RUN chmod +x entrypoint.sh
+
+# Make required experiment scripts executable
 RUN chmod +x experiment-analysis.sh
 RUN chmod +x experiment-stop.sh
 RUN chmod +x experiment.sh
@@ -108,5 +111,5 @@ USER typescriptcrawler
 # Update workdir
 WORKDIR /typescript-crawler 
 
-# Start entrypoint in non-interactive version, to directly run experiment on docker start
-ENTRYPOINT ["/bin/bash", "/typescript-crawler/experiment.sh", "-y"]
+# Start entrypoint script, which starts Xvfb and opens VNC session
+ENTRYPOINT ["/bin/bash", "/typescript-crawler/entrypoint.sh"]
