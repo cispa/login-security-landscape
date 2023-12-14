@@ -6,7 +6,6 @@ from typing import Literal, Dict
 
 class Config:
     ZMQ_SOCK: str = 'tcp://localhost:1337' # zmq socket addresss (send requests to get accounts)
-    ZMQ_TIMEOUT: int = 10
 
     DATABASE: str = os.environ.get("POSTGRES_DB")  # database name
     USER: str = os.environ.get("POSTGRES_USER")  # database user
