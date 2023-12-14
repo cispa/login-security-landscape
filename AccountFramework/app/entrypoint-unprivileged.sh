@@ -1,8 +1,11 @@
 #!/bin/bash
 
-# Start remote desktop
+# Start remote desktop (Xvfb, fluxbox and x11vnc)
 export DISPLAY=:99
-Xvfb $DISPLAY -screen 0 1920x1080x24 & fluxbox -log fluxbox.log & x11vnc -display $DISPLAY -bg -shared -forever -nopw -quiet -xkb -rfbport 5900 -passwdfile $VNC_PASSWORD_FILE
+rm -f /tmp/.X99-lock
+Xvfb $DISPLAY -screen 0 1920x1080x24 -nolisten tcp -nolisten unix &
+fluxbox -log fluxbox.log &
+x11vnc -display $DISPLAY -bg -shared -forever -passwdfile $VNC_PASSWORD_FILE -xkb -rfbport 5900
 
 # Load information from env file
 source $BW_ENV_FILE

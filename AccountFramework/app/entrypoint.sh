@@ -7,10 +7,7 @@ mkdir -p logs auth dirs register validate login
 
 chown -R $APP_USER:$APP_USER .
 
-# Make sure display can be started
-rm -f /tmp/.X99-lock
-
-# Create home directory for unprivileged user (if it doesn't yet exist)
+# Create home directory for unprivileged user
 mkdir -p /home/$APP_USER
 # Change ownership of home directory to unprivileged user
 chown -R $APP_USER:$APP_USER /home/$APP_USER
