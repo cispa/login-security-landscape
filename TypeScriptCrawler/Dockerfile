@@ -3,14 +3,12 @@ ENV TZ=Europe/Berlin
 ENV DEBIAN_FRONTEND noninteractive
 ARG EXPERIMENT
 
-# install stuff
+# Set container timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update --fix-missing -y
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update --fix-missing -y
+
+RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get install -y build-essential libpq-dev
+RUN apt-get install -y build-essential software-properties-common
 
 # Create directory for crawler source & crawler data path
 RUN mkdir -p /typescript-crawler
