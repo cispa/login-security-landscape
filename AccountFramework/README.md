@@ -36,7 +36,7 @@ Prerequistes on the host system (tested on MacOS 14 and Ubuntu 22.04, similar sy
     - The GMAIL details in [identity.sh](secrets/identity.sh) have be filled before the first start. 
     - The other files are recommended to be personalized before the first start but it is not strictly required.
     - For changes to propagate, a restart of the docker containers is required. We recommend setting them at the beginning. 
-- If Bitwarden should not be used/[bw_env.sh](secrets/bw_env.sh) is not filled, set `use_bitwarden` to false in [docker-compose.yaml](docker-compose.yaml)
+- If Bitwarden should not be used/[bw_env.sh](secrets/bw_env.sh) is not filled, set `use_bitwarden` to False in [docker-compose.yaml](docker-compose.yaml)
 - Run `docker compose up -d --build`. After a successful build three containers are running:
     - `accf-auto`: Account Framework API + automated worker, API is running on port `5555`, VNC is running on port `55900` with password [vnc_password.txt](secrets/vnc_password.txt)
     - `worker1`: Container for the first manual worker, VNC is running on port `55901` with password [vnc_password.txt](secrets/vnc_password.txt)
@@ -47,7 +47,7 @@ Prerequistes on the host system (tested on MacOS 14 and Ubuntu 22.04, similar sy
 Before using the account framework, some manual steps within the containers have to be performed:
 - Decide whether to use Bitwarden or not:
     - Without Bitwarden: 
-        - Set `use_bitwarden=False` in [docker-compose.yaml](docker-compose.yaml)
+        - Set `use_bitwarden: False` in [docker-compose.yaml](docker-compose.yaml)
         - Run `docker compose restart` if the setting changed
     - With Bitwarden:
         - Create a Bitwarden account at: https://vault.bitwarden.com/#/register
@@ -162,7 +162,7 @@ In general, the prompt will guide one through the steps to complete each tasks. 
     - [work_auto.py](app/work_auto.py): Automated Worker Code: run automated login and validation tasks (schedules manual tasks if failed)
     - [work_manual.py](app/work_manual.py): Manual Worker Code: run to manually perform registration, login and validation tasks
 - `secrets/`: Settings and tokens for the Account Framework that should not be shared
-    - [bw_env.sh](secrets/bw_env.sh): Settings related to the Bitwarden-Assisted Mode (usage is optional; if not used set `use_bitwarden` in [docker-compose.yaml](docker-compose.yaml) to false)
+    - [bw_env.sh](secrets/bw_env.sh): Settings related to the Bitwarden-Assisted Mode (usage is optional; if not used set `use_bitwarden` in [docker-compose.yaml](docker-compose.yaml) to False)
     - [db_password.txt](secrets/db_password.txt): Password for the Postgres database
     - [identity.sh](secrets/identity.sh): Information about the used identity (username, password, etc. to be used for new accounts) and GMAIL email address + password (necessary for email verification)
     - [vnc_password.txt](secrets/vnc_password.txt): Password for the VNC instance

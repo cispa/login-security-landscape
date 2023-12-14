@@ -1,7 +1,7 @@
 version: '3.8'
 x-common-variables: &common-vars
   # Bitwarden settings
-  use_bitwarden: "True"
+  use_bitwarden: True
   BW_ENV_FILE: "/run/secrets/bw_env" # Secrets for bitwarden
   IDENTITY_FILE: "/run/secrets/identity" # Identity information
   # Postgres settings
@@ -9,7 +9,7 @@ x-common-variables: &common-vars
   POSTGRES_USER: "postgres"
   POSTGRES_DB: "accounts"
   DB_HOST: "db"
-  DB_PORT: "5432" # Internal DB port if using the provided DB (as they are in the same docker network)
+  DB_PORT: 5432 # Internal DB port if using the provided DB (as they are in the same docker network)
   # Other
   VNC_PASSWORD_FILE: "/run/secrets/vnc_password" # Password for remote desktop.
 
