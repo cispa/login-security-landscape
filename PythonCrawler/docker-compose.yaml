@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   baf:
     build: .
@@ -8,16 +9,34 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       POSTGRES_USER: postgres
       POSTGRES_DB: experiment
+      DB_HOST: db
+      DB_PORT: 5432 # Internal DB port if using the provided DB (as they are in the same docker network)
     secrets:
       - vnc_password
       - db_password
     ports:
       - '55902:5900'
-      - '55433:5432' # TODO: move to a DB container
       - '58888:8888' # Jupyer Lab Server; TODO: maybe move to an optional container as well?
+  db:
+    image: postgres:16.1
+    restart: always
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: experiment
+    secrets:
+      - db_password
+    ports:
+      - '55432:5432'  # Postgres database port
+    volumes: 
+      - db:/var/lib/postgresql/data
 
 secrets:
   db_password:
     file: secrets/db_password.txt
   vnc_password:
     file: secrets/vnc_password.txt
+
+volumes:
+  db:
+    driver: local

@@ -8,13 +8,12 @@ from config import Config
 
 
 # PostgresqlDatabase instance to store data
-database = PostgresqlDatabase(Config.DATABASE,
+database = PostgresqlDatabase(database=Config.DATABASE,
                               user=Config.USER,
                               password=Config.PASSWORD,
                               host=Config.HOST,
                               port=Config.PORT,
-                              autorollback=True,
-                              sslmode='disable')
+                              autorollback=True)
 
 
 class BaseModel(Model):

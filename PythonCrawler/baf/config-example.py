@@ -1,3 +1,4 @@
+import os
 import pathlib
 from logging import INFO, DEBUG
 from typing import Literal, Dict
@@ -6,11 +7,11 @@ from typing import Literal, Dict
 class Config:
     ZMQ_SOCK: str = 'tcp://localhost:1337' # zmq socket addresss (send requests to get accounts)
 
-    DATABASE: str = 'experiment'  # database name
-    USER: str = 'postgres'  # database user
-    PASSWORD: str = 'postgres'  # database password
-    HOST: str = 'localhost'  # database host
-    PORT: str = '5432'  # database port
+    DATABASE: str = os.environ.get("POSTGRES_DB")  # database name
+    USER: str = os.environ.get("POSTGRES_USER")  # database user
+    PASSWORD: str = pathlib.Path(os.environ.get("POSTGRES_PASSWORD_FILE")).read_text()  # database password
+    HOST: str = os.environ.get("DB_HOST")  # database host
+    PORT: str = int(os.environ.get("DB_PORT"))  # database port
 
     EXPERIMENT: str = 'example'  # experiment name
 
