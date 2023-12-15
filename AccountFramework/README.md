@@ -20,9 +20,9 @@ Features:
 
 Please follow the below steps to setup the account framework. After following these steps a working account framework instance should exist that can be used for both the demo mode and the real mode.
 
-### Prerequistes
+### Prerequisites
 
-Prerequistes on the host system (tested on MacOS 14 and Ubuntu 22.04, similar sytems should also work):
+Prerequisites on the host system (tested on MacOS 14 and Ubuntu 22.04, similar sytems should also work):
 - [Python3](https://www.python.org/downloads/)
 - [Docker](https://docs.docker.com/get-docker/)
 - Any VNC viewer, e.g., [realvnc](https://www.realvnc.com/de/connect/download/viewer/)
