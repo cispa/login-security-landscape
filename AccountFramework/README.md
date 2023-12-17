@@ -167,7 +167,7 @@ In general, the prompt will guide one through the steps to complete each tasks. 
     - [identity.sh](secrets/identity.sh): Information about the used identity (username, password, etc. to be used for new accounts) and GMAIL email address + password (necessary for email verification)
     - [vnc_password.txt](secrets/vnc_password.txt): Password for the VNC instance
     - The folder and files will be generated later.
-    - These files are accessible in the docker contairens at `/run/secrets/*`. For changes to propagate a restart of the docker containers is required.
+    - These files are accessible in the docker containers at `/run/secrets/*`. For changes to propagate a restart of the docker containers is required.
 - [create_secrets.py](create_secrets.py): Create the secrets files with default values
 - [docker-compose.yaml](docker-compose.yaml): Docker Compose file to start the Account Framework (Auto Worker, Manual Worker, Database)
 - [Dockerfile](Dockerfile): Dockerfile to build the worker containers 
