@@ -1,6 +1,6 @@
 [submodule "TypeScriptCrawler/snippets/pmxss/pmforce"]
-	path = TypeScriptCrawler/snippets/pmxss/pmforce
+	path = TypeScriptCrawler/src/snippets/pmxss/pmforce
 	url = https://github.com/mariussteffens/pmforce.git
 [submodule "TypeScriptCrawler/snippets/cxss/persistent-clientside-xss"]
-	path = TypeScriptCrawler/snippets/cxss/persistent-clientside-xss
+	path = TypeScriptCrawler/src/snippets/cxss/persistent-clientside-xss
 	url = https://github.com/thelbrecht/persistent-clientside-xss-for-login-security.git

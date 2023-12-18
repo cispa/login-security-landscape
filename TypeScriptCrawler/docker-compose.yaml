@@ -3,17 +3,17 @@ version: '3.8'
 # Database configuration
 x-dbenv: &dbenv
   POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
+  POSTGRES_PASSWORD_FILE: /run/secrets/db_password
 
 # Experiment configuration
 x-experiment: &experiment
   EXPERIMENT: pmsecurity # Change to cxss for client-side XSS experiment
-  ZMQ_HOST: tcp://127.0.0.1:1234
+  ZMQ_HOST: tcp://accf-auto:5555
   ZMQ_EXPERIMENT: experiment
   ZMQ_ENABLE: "true"
   DEMO_MODE: "true"
   START_INSECURE_WEBSERVER: "false"
-  VNC_PASSWORD: abc
+  VNC_PASSWORD_FILE: /run/secrets/vnc_password
 
 services:
   typescript-crawler-db:
@@ -21,13 +21,18 @@ services:
     image: postgres:16.1
     restart: always
     ports:
-      - 55434:5432
+      - 55434:5432  
+    networks:
+      - accf-custom
+    secrets:
+      - db_password
+    environment: *dbenv  
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
-    environment: *dbenv
+
   typescript-crawler:
     container_name: typescript-crawler
     build:
@@ -38,7 +43,23 @@ services:
       typescript-crawler-db:
         condition: service_healthy
     ports:
-      - 55903:5900
+      - 55903:5900  
+    networks:
+      - accf-custom
+    secrets:
+      - db_password
+      - vnc_password
     environment:
       <<: [ *dbenv, *experiment ]
       POSTGRES_HOST: typescript-crawler-db
+
+secrets:
+  db_password:
+    file: secrets/db_password.txt
+  vnc_password:
+    file: secrets/vnc_password.txt
+
+
+networks:
+  accf-custom:
+    name: "accf-custom"

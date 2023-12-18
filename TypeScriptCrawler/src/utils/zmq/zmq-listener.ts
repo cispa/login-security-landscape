@@ -74,7 +74,7 @@ const fetchSession = async () => {
         }
     }
     // Initialize ZMQ wrapper depending on configuration with test element or real
-    const zmqSession = !listenerConfiguration.testMode ? new ZMQWrapper() : new ZMQWrapperTest();
+    const zmqSession = !listenerConfiguration.testMode?.enabled ? new ZMQWrapper() : new ZMQWrapperTest();
     await zmqSession.init();
     // Assign session count
     zmqSession.sessionCount = sessionCount;

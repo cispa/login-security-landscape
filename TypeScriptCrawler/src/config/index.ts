@@ -17,7 +17,6 @@ export type Config = {
     headfull: boolean,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dynamic: any,
-    catpureResources: boolean,
     links: {
         collect: boolean,
         maximum: LinkMaximum
@@ -54,7 +53,6 @@ const flags: string[] = [
 const config: Config = {
     mode: args.test ? "test" : "connected",
     headfull: args.headfull,
-    catpureResources: true,
     flags,
     links: {
         collect: true,

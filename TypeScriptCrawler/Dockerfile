@@ -65,13 +65,12 @@ RUN if [ "$EXPERIMENT" = "cxss" ]; then \
     cp /foxhound/playwright/browser_patches/firefox/preferences/playwright.cfg /foxhound/build/obj-tf-release/dist/bin/playwright.cfg;\
     fi
 
-WORKDIR /typescript-crawler 
 
 # Copy project source
-COPY . . 
+COPY ./src/ /typescript-crawler 
 
-# Fetch submodules (pmforce+persistent-clientside-xss)
-RUN git submodule update --init --recursive
+WORKDIR /typescript-crawler 
+
 
 # Install dependencies for cxss experiment (exploit generator)
 WORKDIR /typescript-crawler/snippets/cxss/persistent-clientside-xss/src 
