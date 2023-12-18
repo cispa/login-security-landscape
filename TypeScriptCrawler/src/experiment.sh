@@ -7,12 +7,14 @@ STDOUT_LOG_PATH=/typescript-crawler-data/crawl_$TIMESTAMP/log      # Path for no
 STDERR_LOG_PATH=/typescript-crawler-data/crawl_$TIMESTAMP/err      # Path for error log output
 DATA_PATH=/typescript-crawler-data/crawl_$TIMESTAMP/data           # Path for crawl artifacts
 
+POSTGRES_PASSWORD=$(cat $POSTGRES_PASSWORD_FILE | tr -d '\n')
 # Create new database for the experiment
 PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -c "CREATE DATABASE $POSTGRES_DB;";
 export POSTGRES_DB=$POSTGRES_DB;
 
-# Make postgres database name available for analysis script
+# Make postgres database name/password available for crawler
 echo "POSTGRES_DB=$POSTGRES_DB" >> .env;
+echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env;
 
 # Make $DISPLAY variable available to crawler
 echo "DISPLAY=:99" >> .env;
@@ -29,7 +31,7 @@ if [ "$1" != "-y" ]; then
     read -p "[experiment] Do you want to start the crawl? (yY/nN) " yn
 
     case $yn in 
-    y|Y ) echo "yes";;
+    y|Y ) echo "[experiment] Beginning startup of crawlers";;
     n|N ) exit 1;;
     * ) exit 1;;
     esac
@@ -59,10 +61,10 @@ fi
 if [[ "$ZMQ_ENABLE" == "true" ]]; then 
     ZMQ_FETCH_INTERVAL=60   # Interval which is waited between calls to ZMQ server for new session in seconds
     if [[ "$DEMO_MODE" == "true" ]]; then 
-    echo "[spawn] Starting zmq listener for session fetching in demo mode."
+    echo "[experiment] Starting zmq listener for session fetching in demo mode."
         node --max-old-space-size=16384 $CWD/dist/utils/zmq/zmq-listener.js --crawlers $CRAWLER_COUNT --fetchinterval $ZMQ_FETCH_INTERVAL --demo 2>> $STDERR_LOG_PATH/zmq-listener.log >> $STDOUT_LOG_PATH/zmq-listener.log  &
     else 
-    echo "[spawn] Starting zmq listener for session fetching."
+    echo "[experiment] Starting zmq listener for session fetching."
         node --max-old-space-size=16384 $CWD/dist/utils/zmq/zmq-listener.js --crawlers $CRAWLER_COUNT --fetchinterval $ZMQ_FETCH_INTERVAL 2>> $STDERR_LOG_PATH/zmq-listener.log >> $STDOUT_LOG_PATH/zmq-listener.log &
     fi
 fi

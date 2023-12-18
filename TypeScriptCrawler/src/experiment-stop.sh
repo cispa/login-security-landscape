@@ -10,15 +10,10 @@ kill $(pgrep -f node\ --max-old-space-size=16384\ $CWD/dist/crawler/visit.js);
 echo "[kill] Killing zmq listener process";
 kill $(pgrep -f node\ --max-old-space-size=16384\ $CWD/dist/utils/zmq/zmq-listener.js);
 
-echo "[kill] Killing insecure webserver";
-kill $(pgrep -f node\ $CWD/snippets/insecure-webpages/server.js);
-
-MODULE=$1
-
-if [[ $MODULE == "pmsecurity" ]]; then
+if [[ $EXPERIMENT == "pmsecurity" ]]; then
     echo "[kill] Killing processes belonging to pmsecurity"
     kill $(pgrep -f python3\ ./snippets/pmxss/python/ConstraintSolver.py)
-elif [[ $MODULE == "cxss" ]]
+elif [[ $EXPERIMENT == "cxss" ]]
 then
     echo "[kill] Killing processes belonging to cxss"
     kill $(pgrep foxhound)

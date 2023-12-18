@@ -22,6 +22,8 @@ services:
     ports:
       - '55900:5900' # VNC (remote desktop)
       - '5555:5555' # ZMQ (account framework api)
+    networks:
+      - accf-custom
     security_opt:
       - "seccomp:seccomp.json"
     environment:
@@ -45,6 +47,8 @@ services:
     command: "entrypoint.sh"
     ports:
       - '55901:5900' # VNC (remote desktop)
+    networks:
+      - accf-custom
     security_opt:
       - "seccomp:seccomp.json"
     environment:
@@ -69,6 +73,8 @@ services:
       - db_password
     ports:
       - '55432:5432'  # Postgres database port
+    networks:
+      - accf-custom
     volumes: 
       - db:/var/lib/postgresql/data
 
@@ -85,3 +91,7 @@ secrets:
 volumes:
   db:
     driver: local
+    
+networks:
+  accf-custom:
+    name: "accf-custom"

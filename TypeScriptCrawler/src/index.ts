@@ -29,13 +29,14 @@ const spawnCrawler = (crawlerId: number, subject: Task) => {
             '--subject',
             subject.id,
             // Pass relevant optional configuration options from CLI
-            ...(config.dynamic.module ? ['--module', config.dynamic.module] : []),
-            ...(config.dynamic.headfull ? ['--headfull'] : []),
             ...(config.dynamic.datapath ? ['--datapath', config.dynamic.datapath] : []),
+            ...(config.dynamic.module ? ['--module', config.dynamic.module] : []),
+            ...(config.dynamic.user_data_dir ? ['--user_data_dir', config.dynamic.user_data_dir] : []),
             ...(config.dynamic.chromium ? ['--chromium'] : []),
             ...(config.dynamic.firefox ? ['--firefox'] : []),
             ...(config.dynamic.browser_executable_path ? ['--browser_executable_path', config.dynamic.browser_executable_path] : []),
-            ...(config.dynamic.user_agent ? ['--user_agent', config.dynamic.user_agent] : [])
+            ...(config.dynamic.user_agent ? ['--user_agent', config.dynamic.user_agent] : []),
+            ...(config.dynamic.headfull ? ['--headfull'] : [])
         ], { 'detached': true });
 
         child.stdout.setEncoding('utf8');
