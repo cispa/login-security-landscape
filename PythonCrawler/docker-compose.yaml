@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  baf:
+  pycrawler:
     build: .
-    container_name: baf
+    container_name: pycrawler
     environment:
       VNC_PASSWORD_FILE: /run/secrets/vnc_password
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
@@ -11,12 +11,15 @@ services:
       POSTGRES_DB: experiment
       DB_HOST: db
       DB_PORT: 5432 # Internal DB port if using the provided DB (as they are in the same docker network)
+      ZMQ_HOST: tcp://accf-auto:5555
     secrets:
       - vnc_password
       - db_password
     ports:
       - '55902:5900'
       - '58888:8888' # Jupyer Lab Server; TODO: maybe move to an optional container as well?
+    networks:
+      - accf-custom
   db:
     image: postgres:16.1
     restart: always
@@ -28,6 +31,8 @@ services:
       - db_password
     ports:
       - '55432:5432'  # Postgres database port
+    networks:
+      - accf-custom
     volumes: 
       - db:/var/lib/postgresql/data
 
@@ -40,3 +45,7 @@ secrets:
 volumes:
   db:
     driver: local
+
+networks:
+  accf-custom:
+    name: "accf-custom"

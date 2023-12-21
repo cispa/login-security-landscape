@@ -1,15 +1,11 @@
-import os
 import pathlib
 import re
 from typing import Optional
 
-import numpy
 import tld
-from playwright.sync_api import Error, Frame, Locator, Page, Response
-from sklearn.cluster import dbscan
-from tld.exceptions import TldBadUrl, TldDomainNotFound
-
 from config import Config
+from playwright.sync_api import Error, Frame, Locator, Page, Response
+from tld.exceptions import TldBadUrl, TldDomainNotFound
 
 CLICKABLES: str = r'button,*[role="button"],*[onclick],input[type="button"],input[type="submit"],' \
                   r'a[href="#"]'
@@ -21,6 +17,15 @@ SSO: str = r'Facebook|Twitter|Google|Yahoo|Windows.?Live|Linked.?In|Git.?Hub|Pay
 
 
 def get_tld_object(url: str) -> Optional[tld.utils.Result]:
+    """
+    Converts a string to parsed TLD.utils.Result object.
+
+    Args:
+    - url (str): The URL string from which the parsed TLD.utils.Result will be generated.
+
+    Returns:
+    - Optional[tld.utils.Result]: The parsed TLD.utils.Result object.
+    """
     try:
         return tld.get_tld(url, as_object=True)
     except (TldBadUrl, TldDomainNotFound):
@@ -28,6 +33,15 @@ def get_tld_object(url: str) -> Optional[tld.utils.Result]:
 
 
 def get_url_origin(url: Optional[tld.utils.Result]) -> str:
+    """
+    Extract the origin of a TLD.utils.Result object.
+
+    Args:
+    - url (Optional[tld.utils.Result]): The parsed TLD.utils.Result object.
+
+    Returns:
+    - str: The origin (scheme://hostname:port) of the URL.
+    """
     if url is None:
         return ''
 
@@ -35,32 +49,31 @@ def get_url_origin(url: Optional[tld.utils.Result]) -> str:
 
 
 def get_url_scheme_site(url: Optional[tld.utils.Result]) -> str:
+    """
+    Get the site (ETLD+1) of the TLD.utils.Result object.
+
+    Args:
+    - url (Optional[tld.utils.Result]): The parsed TLD.utils.Result object.
+
+    Returns:
+    - str: The site (ETLD+1) of the URL.
+    """
     if url is None:
         return ''
 
     return url.parsed_url.scheme + '://' + url.fld
 
 
-def get_url_entity(url: Optional[tld.utils.Result]) -> str:
-    if url is None:
-        return ''
-
-    etldp1: str = url.fld
-
-    # TODO improve
-    if re.search(r'^(google\.|youtube\.com|blogger\.com|blogspot\.com)', etldp1,
-                 flags=re.I) is not None:
-        return 'Google'
-    elif re.search(r'^(facebook\.com|fb\.com)', etldp1, flags=re.I) is not None:
-        return 'Facebook'
-    elif re.search(r'^(microsoft\.com|msn\.com|live\.com|outlook\.com)', etldp1,
-                   flags=re.I) is not None:
-        return 'Microsoft'
-
-    return etldp1
-
-
 def get_url_full(url: Optional[tld.utils.Result]) -> str:
+    """
+    Get the full URL (without query or fragment) of the TLD.utils.Result object.
+
+    Args:
+    - url (Optional[tld.utils.Result]): The parsed TLD.utils.Result object.
+
+     Returns:
+    - str: The full URL as a string (without query or fragment).
+    """
     if url is None:
         return ''
 
@@ -68,6 +81,15 @@ def get_url_full(url: Optional[tld.utils.Result]) -> str:
 
 
 def get_url_full_with_query(url: Optional[tld.utils.Result]) -> str:
+    """
+    Get the full URL with query (without fragment) of the TLD.utils.Result object.
+
+    Args:
+    - url (Optional[tld.utils.Result]): The parsed TLD.utils.Result object.
+
+     Returns:
+    - str: The full URL as a string with query (without fragment).
+    """
     if url is None:
         return ''
 
@@ -75,6 +97,15 @@ def get_url_full_with_query(url: Optional[tld.utils.Result]) -> str:
 
 
 def get_url_full_with_query_fragment(url: Optional[tld.utils.Result]) -> str:
+    """
+    Get the full URL with query and fragment of the TLD.utils.Result object.
+
+    Args:
+    - url (Optional[tld.utils.Result]): The parsed TLD.utils.Result object.
+
+     Returns:
+    - str: The full URL as a string with query and fragment.
+    """
     if url is None:
         return ''
 
@@ -83,6 +114,16 @@ def get_url_full_with_query_fragment(url: Optional[tld.utils.Result]) -> str:
 
 
 def get_url_from_href(href: str, origin: tld.utils.Result) -> Optional[tld.utils.Result]:
+    """
+    Convert an href to a parsed TLD.utils.Result object.
+
+    Args:
+    - href (str): The href string
+    - origin (tld.utils.Result): The URL of the page from where the href resides parsed as TLD.utils.Result object.
+
+    Returns:
+    - Optional[tld.utils.Result]: The parsed href as a TLD.utils.Result object.
+    """
     if re.match('^http', href) is not None:
         res: Optional[tld.utils.Result] = get_tld_object(href)
     elif re.match('^//', href) is not None:
@@ -103,6 +144,14 @@ def get_url_from_href(href: str, origin: tld.utils.Result) -> Optional[tld.utils
 
 
 def get_screenshot(page: Page, path: pathlib.Path, force: bool) -> None:
+    """
+    Create a screenshot for a page and save it at specified path.
+
+    Args:
+    - page (Page): The page to capture the screenshot from.
+    - path (pathlib.Path): The path where the screenshot will be saved.
+    - force (bool): Indicates whether to overwrite an existing file if the path already exists.
+    """
     if not path.exists() or force:
         try:
             page.screenshot(path=path, full_page=True)
@@ -111,6 +160,16 @@ def get_screenshot(page: Page, path: pathlib.Path, force: bool) -> None:
 
 
 def get_locator_count(locator: Optional[Locator], page: Optional[Page | Frame] = None) -> int:
+    """
+    Get the number of elements in a Playwright locator.
+
+    Args:
+    - locator (Optional[Locator]): The locator to count.
+    - page (Optional[Page | Frame]): The page or frame where the locator resides.
+
+    Returns:
+    - int: The number of elements in the locator. On an error, returns 0 elements.
+    """
     if locator is None:
         return 0
 
@@ -124,6 +183,16 @@ def get_locator_count(locator: Optional[Locator], page: Optional[Page | Frame] =
 
 
 def get_locator_nth(locator: Optional[Locator], nth: int) -> Optional[Locator]:
+    """
+    Get the n-th elements from a Playwright locator.
+
+    Args:
+    - locator (Optional[Locator]): The locator.
+    - nth (int): The n-th element of the locator to retrieve.
+
+    Returns:
+    - Optional[Locator]: The nth occurrence of an element in the locator if found. Returns None if not found.
+    """
     count: int = get_locator_count(locator)
 
     if locator is None or count < 1:
@@ -139,6 +208,16 @@ def get_locator_nth(locator: Optional[Locator], nth: int) -> Optional[Locator]:
 
 
 def get_locator_attribute(locator: Optional[Locator], attribute: str) -> Optional[str]:
+    """
+    Get an attribute of a Playwright locator.
+
+    Args:
+    - locator (Optional[Locator]): The locator from which to extract the attribute.
+    - attribute (str): The name of the attribute to retrieve.
+
+    Returns:
+    - Optional[str]: The value of the specified attribute if found. Returns None if the attribute or locator is missing.
+    """
     if locator is None or get_locator_count(locator) > 1:
         return None
 
@@ -149,6 +228,15 @@ def get_locator_attribute(locator: Optional[Locator], attribute: str) -> Optiona
 
 
 def get_outer_html(locator: Optional[Locator]) -> Optional[str]:
+    """
+    Get the outer HTML of a Playwright locator.
+
+    Args:
+    - locator (Optional[Locator]): The locator to extract the outer HTML from.
+
+    Returns:
+    - Optional[str]: The outer HTML content if the locator is found. Returns None if the locator is missing.
+    """
     if locator is None:
         return None
 
@@ -159,57 +247,28 @@ def get_outer_html(locator: Optional[Locator]) -> Optional[str]:
 
 
 def get_label_for(locator: Locator | Page, element_id: str) -> Locator:
+    """
+    Get the label of a an element with an ID.
+
+    Args:
+    - locator (Locator | Page): The locator or page object where the element resides.
+    - element_id (str): The ID of the element for which the label is desired.
+
+    Returns:
+    - Locator: The label associated with the specified element.
+    """
     return locator.locator(f"label[for=\"{element_id}\"]")
 
 
-def get_string_distance(str1: str, str2: str, normalize: bool = False) -> float:
-    track = numpy.zeros((len(str1) + 1, len(str2) + 1))
-
-    for i in range(len(str1) + 1):
-        track[i][0] = i
-
-    for j in range(len(str2) + 1):
-        track[0][j] = j
-
-    for i in range(1, len(str1) + 1):
-        for j in range(1, len(str2) + 1):
-            cost: int = str1[i - 1] != str2[j - 1]
-            track[i][j] = min(track[i - 1][j] + 1, track[i][j - 1] + 1, track[i - 1][j - 1] + cost)
-
-            if i > 1 and j > 1 and str1[i - 1] == str2[j - 2] and str1[i - 2] == str2[j - 1]:
-                track[i][j] = min(track[i][j], track[i - 2][j - 2] + 1)
-
-    result: float = float(track[len(str1)][len(str2)])
-    return (2 * result) / (len(str1) + len(str2) + result) if normalize and (
-            len(str1) + len(str2) + result) != 0.0 else result
-
-
-def get_urls_distance(url1: tld.utils.Result, url2: tld.utils.Result,
-                      normalize: bool = False) -> float:
-    if get_url_origin(url1) != get_url_origin(url2):
-        return 1.0 if normalize else float(len(url1.parsed_url.path) + len(url2.parsed_url.path))
-
-    path1: list[str] = list(filter(''.__ne__, url1.parsed_url.path.split('/')))
-    path2: list[str] = list(filter(''.__ne__, url2.parsed_url.path.split('/')))
-
-    if len(path1) > 1 and len(path1) == len(path2) and (
-            len(path1[-1]) >= 25 or len(path2[-1]) >= 25):
-        return get_string_distance(path1[-2], path2[-2], normalize=True)
-
-    return get_string_distance(url1.parsed_url.path, url2.parsed_url.path, normalize=normalize)
-
-
-def get_urls_cluster(urls: list[tld.utils.Result], threshold: float):
-    cluster = dbscan(numpy.arange(len(urls)).reshape(-1, 1),
-                     metric=lambda x, y: get_urls_distance(urls[int(x[0])], urls[int(y[0])],
-                                                           normalize=True), eps=threshold,
-                     min_samples=2)
-
-    # TODO finish
-    return cluster
-
-
 def invoke_click(page: Page | Frame, clickable: Optional[Locator], timeout=30000) -> None:
+    """
+    Emulate a user click on a Playwright locator.
+
+    Args:
+    - page (Page | Frame): The page or frame containing the clickable element.
+    - clickable (Optional[Locator]): The locator representing the clickable element.
+    - timeout (int): The maximum time in milliseconds to wait for the element to be clickable.
+    """
     if clickable is None or get_locator_count(clickable) > 1:
         return
 
@@ -224,37 +283,18 @@ def invoke_click(page: Page | Frame, clickable: Optional[Locator], timeout=30000
         pass
 
 
-def get_visible_extra(locator: Optional[Locator]) -> bool:
-    if locator is None or get_locator_count(locator) != 1:
-        return False
+def refresh_page(page: Page | Frame) -> Optional[Response]:
+    """
+    Refresh (with a top-level navigation) a page.
 
+    Args:
+    - page (Page | Frame): The page or frame to refresh.
+
+    Returns:
+    - Optional[Response]: The response object if the navigation succeeds. Returns None if unsuccessful.
+    """
     try:
-        locator.click(timeout=2000, trial=True)
-    except Error:
-        return False
-
-    opacity: str = locator.evaluate("""
-                                    node => {
-                                      var resultOpacity = 1;
-                                    
-                                      while (node) {
-                                        try {
-                                          resultOpacity = Math.min(resultOpacity, window.getComputedStyle(node).getPropertyValue("opacity") || resultOpacity);
-                                        }
-                                        catch { }
-                                        node = node.parentNode;
-                                      }
-                                    
-                                      return resultOpacity;
-                                    }
-                                    """)
-
-    return locator.is_visible() and float(opacity) > 0.0
-
-
-def refresh_page(page: Page | Frame, url: str) -> Optional[Response]:
-    try:
-        response = page.goto(url, timeout=Config.LOAD_TIMEOUT, wait_until=Config.WAIT_LOAD_UNTIL)
+        response = page.goto(page.url, timeout=Config.LOAD_TIMEOUT, wait_until=Config.WAIT_LOAD_UNTIL)
         page.wait_for_timeout(Config.WAIT_AFTER_LOAD)
     except Error:
         return None

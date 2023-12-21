@@ -11,7 +11,7 @@ from logging import FileHandler, Formatter, Logger
 from multiprocessing import Pipe, Process
 from typing import List, Optional, Type
 
-from add_tasks import unlock_session
+from load_sessions import unlock_session
 from crawler import Crawler
 from database import URL, Task, database
 from modules.module import Module
@@ -113,6 +113,9 @@ def main(job: str, crawlers_count: int, module_names: List[str], log_path: Optio
 
 
 def _get_modules(module_names: List[str]) -> List[Type[Module]]:
+    """
+    Dynamically import Python Crawler modules.
+    """
     result: List[Type[Module]] = []
     for module_name in module_names:
         module = importlib.import_module('modules.' + module_name.lower())
@@ -121,6 +124,9 @@ def _get_modules(module_names: List[str]) -> List[Type[Module]]:
 
 
 def _get_task(job: str, crawler_id: int, log) -> Optional[Task]:
+    """
+    Try to get a task from the database. Thread-safe with a lock.
+    """
     # Get progress task
     task: Optional[Task] = Task.get_or_none(job=job, crawler=crawler_id, state='progress')
     if task is not None:
@@ -148,6 +154,9 @@ def _get_task(job: str, crawler_id: int, log) -> Optional[Task]:
 
 # Overwatch process that starts the actual crawlers
 def _manage_crawler(job: str, crawler_id: int, log_path: pathlib.Path, modules: List[Type[Module]], listen: bool) -> None:
+    """
+    Sentinel process that starts, stops, monitors the state, and manages the actual crawlers.
+    """
     log = _get_logger(job, crawler_id, log_path)
 
     # Get task
@@ -239,6 +248,9 @@ def _manage_crawler(job: str, crawler_id: int, log_path: pathlib.Path, modules: 
 
 
 def _start_crawler(job: str, crawler_id: int, task: int, log_path: pathlib.Path, modules: List[Type[Module]]) -> None:
+    """
+    Wrapper that starts the crawler.
+    """
     log = _get_logger(job, crawler_id, log_path)
     log.info('Start crawler')
     crawler: Crawler = Crawler(job, crawler_id, task, log, modules)
@@ -248,6 +260,9 @@ def _start_crawler(job: str, crawler_id: int, task: int, log_path: pathlib.Path,
 
 
 def _get_logger(job: str, crawler_id: int, log_path: pathlib.Path) -> Logger:
+    """
+    Get a logger handle.
+    """
     handler: FileHandler = FileHandler(log_path / f"job{job}crawler{crawler_id}.log")
     handler.setFormatter(Formatter('%(asctime)s %(levelname)s %(message)s'))
     log = Logger(f"Job {job} Crawler {crawler_id}")
@@ -257,6 +272,9 @@ def _get_logger(job: str, crawler_id: int, log_path: pathlib.Path) -> Logger:
 
 
 def _get_line_last(path: str | pathlib.Path) -> str:
+    """
+    Method to monitor the last update in a log file.
+    """
     with open(path, mode='rb') as file:
         line: bytes = b''
 
@@ -299,7 +317,7 @@ if __name__ == '__main__':
     args_parser.add_argument("-i", "--crawlerid", type=int, default=1,
                              help="starting crawler id (default 1); must be > 0")
     args_parser.add_argument("-l", "--listen", default=False, action='store_true',
-                             help="crawler will not stop if there is no job; query and sleep until a job is found")
+                             help="crawler will not stop if there is no task (useful for the use with the account framework where tasks are slowly coming in)")
 
     # Parse command line arguments
     args = vars(args_parser.parse_args())
