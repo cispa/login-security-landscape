@@ -24,6 +24,10 @@ services:
       - '5555:5555' # ZMQ (account framework api)
     networks:
       - accf-custom
+      - db
+    depends_on:
+      db:
+        condition: service_healthy   
     security_opt:
       - "seccomp:seccomp.json"
     environment:
@@ -49,6 +53,10 @@ services:
       - '55901:5900' # VNC (remote desktop)
     networks:
       - accf-custom
+      - db
+    depends_on:
+      db:
+        condition: service_healthy   
     security_opt:
       - "seccomp:seccomp.json"
     environment:
@@ -74,9 +82,14 @@ services:
     ports:
       - '55432:5432'  # Postgres database port
     networks:
-      - accf-custom
+      - db
     volumes: 
       - db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 secrets:
   vnc_password:
@@ -95,3 +108,4 @@ volumes:
 networks:
   accf-custom:
     name: "accf-custom"
+  db:

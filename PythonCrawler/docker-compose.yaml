@@ -3,7 +3,6 @@ version: '3.8'
 services:
   pycrawler:
     build: .
-    container_name: pycrawler
     environment:
       VNC_PASSWORD_FILE: /run/secrets/vnc_password
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
@@ -20,6 +19,11 @@ services:
       - '58888:8888' # Jupyer Lab Server; TODO: maybe move to an optional container as well?
     networks:
       - accf-custom
+      - db
+    depends_on:
+      db:
+        condition: service_healthy
+  
   db:
     image: postgres:16.1
     restart: always
@@ -32,9 +36,14 @@ services:
     ports:
       - '55433:5432'  # Postgres database port
     networks:
-      - accf-custom
+      - db
     volumes: 
       - db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 secrets:
   db_password:
@@ -49,3 +58,4 @@ volumes:
 networks:
   accf-custom:
     name: "accf-custom"
+  db:

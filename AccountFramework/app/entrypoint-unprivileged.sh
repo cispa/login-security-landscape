@@ -24,8 +24,6 @@ if [[ -z "$WORKER" ]]; then
     # Setup db and rerun documentation creation
     python3 db.py
     python3 db_documenter.py
-    # Wait for DB to be ready
-    sleep 5
     # Setup the identity
     python3 create_identity.py
     # Start the API

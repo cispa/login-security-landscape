@@ -17,15 +17,16 @@ x-experiment: &experiment
 
 services:
   typescript-crawler-db:
-    container_name: typescript-crawler-db
     image: postgres:16.1
     restart: always
     ports:
       - 55434:5432  
-    networks:
-      - accf-custom
     secrets:
       - db_password
+    networks:
+      - db
+    volumes: 
+      - db:/var/lib/postgresql/data
     environment: *dbenv  
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
@@ -34,7 +35,6 @@ services:
       retries: 5
 
   typescript-crawler:
-    container_name: typescript-crawler
     build:
       context: .
       args:
@@ -46,6 +46,7 @@ services:
       - 55903:5900  
     networks:
       - accf-custom
+      - db
     secrets:
       - db_password
       - vnc_password
@@ -59,7 +60,11 @@ secrets:
   vnc_password:
     file: secrets/vnc_password.txt
 
+volumes:
+  db:
+    driver: local
 
 networks:
   accf-custom:
     name: "accf-custom"
+  db:
