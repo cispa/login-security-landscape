@@ -1,0 +1,8 @@
+# Docker related files
+.dockerignore
+docker-compose.yml
+Dockerfile
+
+# Project files
+create_secrets.py
+README.md
