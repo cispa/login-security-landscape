@@ -9,9 +9,9 @@ A Comparative Analysis of the Pre- and Post-Login Security Landscape". You can f
 
 ### Prerequisites
 
-- Python3
-- Docker
-- VNC viewer
+1. [Python3](https://www.python.org/downloads/)
+2. [Docker](https://docs.docker.com/get-docker/)
+3. Any VNC viewer, e.g., [realvnc](https://www.realvnc.com/de/connect/download/viewer/)
 
 ### Installation
 
