@@ -1,13 +1,11 @@
 # TypeScriptCrawler
 
-This repository contains the typescript crawler used in the client-side XSS and PostMessage security experiments in our IEEE S&P 2024 paper "To Auth or Not To Auth?  
-A Comparative Analysis of the Pre- and Post-Login Security Landscape". You can find the final version of the paper [here](#TODO). The crawler uses sessions from the account framework for visiting sites in logged-in and logged-out state. Additionally, the crawler supports a demo mode, that allows to run the experiments without having to to setup a ZMQ server for demonstration purposes.
+TypeScriptCrawler is a modular, extensible crawler written in Typescript, using [Playwright](https://playwright.dev/) for web experiments. The crawler can use sessions from the account framework for visiting sites in logged-in and logged-out state. Additionally, the crawler supports a demo mode, that allows to run the experiments without having to to setup a ZMQ server for demonstration purposes.
 
 ## Installation and Setup
 
-<!-- TODO: Hint on which  system it was tested on -->
-
 ### Prerequisites
+Prerequisites on the host system (tested on Ubuntu 22.04, similar systems should also work):
 
 1. [Python3](https://www.python.org/downloads/)
 2. [Docker](https://docs.docker.com/get-docker/)
