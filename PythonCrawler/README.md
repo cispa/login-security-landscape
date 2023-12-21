@@ -18,7 +18,7 @@ PythonCrawler is a Python-based extendible and modular crawling framework that u
 4. Open a shell within the docker container to interact with it: `docker compose exec -u pycrawler -it pycrawler /bin/bash`
 5. Optional: Open a shell and monitor the logs of the crawler: `docker compose exec -u pycrawler -it pycrawler tail -f ./logs/*.log`
 6. Optional: Connect to the VNC container at `localhost:55900`
-7. Optional: Connect to the database at `localhost:55432`
+7. Optional: Connect to the database at `localhost:55433`
 
 ## Usage
 

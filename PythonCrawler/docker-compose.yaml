@@ -30,7 +30,7 @@ services:
     secrets:
       - db_password
     ports:
-      - '55432:5432'  # Postgres database port
+      - '55433:5432'  # Postgres database port
     networks:
       - accf-custom
     volumes: 
