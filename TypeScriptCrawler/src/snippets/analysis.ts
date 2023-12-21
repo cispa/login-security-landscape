@@ -15,7 +15,7 @@ const cxssAnalysis = async () => {
     Logging.info(`Visited ${visitedSubjects[0][0].count} / ${totalSubjects[0][0].count} successfully.`)
 
     // Access the table structure from the method setup in module/cxss.ts
-    let confirmedExploits = await sequelize.query("SELECT COUNT(*) as count FROM cxss_exploit WHERE exploitability = 1;")
+    let confirmedExploits = await sequelize.query("SELECT COUNT(*) as count FROM cxss_exploit WHERE status = 1;")
     Logging.info(`Found ${confirmedExploits[0][0].count} confirmed exploits in the crawl.`)
 
     // TODO: More meaningful analysis...
