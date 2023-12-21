@@ -10,7 +10,7 @@ Features:
     - API that delivers valid sessions to experiments
         - By default an experiment receives any available session that was not used by the experiment already
         - Option to receive a session for a specific site (if available) regardless of whether the website was already used
-    - Automatically expiry and revalidation of sessions
+    - Automatic expiry and revalidation of sessions
 - Extra:
     - Automated registration and login form finding on CrUX sites
     - Bitwarden-assisted manual mode
@@ -18,7 +18,7 @@ Features:
 
 ## Installation and Setup
 
-Please follow the below steps to setup the account framework. After following these steps a working account framework instance should exist that can be used for both the demo mode and the real mode.
+Please follow the steps below to setup the account framework. After following these steps a working account framework instance should exist that can be used for both the demo mode and the real mode.
 
 ### Prerequisites
 
@@ -27,7 +27,7 @@ Prerequisites on the host system (tested on MacOS 14 and Ubuntu 22.04, similar s
 - [Docker](https://docs.docker.com/get-docker/)
 - Any VNC viewer, e.g., [realvnc](https://www.realvnc.com/de/connect/download/viewer/)
 - [GMAIL](https://mail.google.com/mail/) account
-- Optional but recommended: [Bitwarden](https://vault.bitwarden.com/#/register) account
+- Optional (recommended): [Bitwarden](https://vault.bitwarden.com/#/register) account
 - RAM: >8GB
 
 ### Installation
@@ -77,7 +77,7 @@ In the following, we describe how to use the various features of the account fra
 
 ### Quickstart
 Running the following will create a demo identity and some registration and login tasks for both automated workers and the manual mode.
-We recommend running it in the beginning to get an overview of the framework. However, the demo mode can result in more than one session for the same website-identity pair. Thus, we recommend cleansing the database before using the account framework for real experiments.
+We recommend running it in the beginning to get an overview of the framework. However, the demo mode can result in more than one session for the same website-identity pair. Thus, we recommend resetting the database before using the account framework for real experiments.
 - First open a shell in the account framework container: `docker compose exec -u demouser -it accf-auto  /bin/bash`
 - Run `source /run/secrets/identity && python3 demo_task_creation.py` within the shell to create demo login and registration tasks.
 - Optional:
@@ -153,7 +153,7 @@ In general, the prompt will guide one through the steps to complete each tasks. 
     - [db.py](app/db.py): Code to manage the Account Framework database models
     - [demo_task_creation.py](app/demo_task_creation.py): Code to add demo tasks to the account framework
     - [entrypoint-unprivileged.sh](app/entrypoint-unprivileged.sh): Shell script run at start of the worker containers
-    - [entrypoint.sh](app/entrypoint.sh): Privileged shell script run at start of the worker containers (start Xvfb)
+    - [entrypoint.sh](app/entrypoint.sh): Privileged shell script run at start of the worker containers (starts Xvfb)
     - [expire_sessions.py](app/expire_sessions.py): Expire sessions that were not used in the last 12 hours
     - [prepare.py](app/prepare.py): Code to run automated registration and login form finding on CrUX websites and automatically creating registration tasks for them
     - [requirements.txt](app/requirements.txt): Requiments file for the containers

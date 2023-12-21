@@ -1,13 +1,13 @@
 # To Auth or Not To Auth? A Comparative Analysis of the Pre- and Post-Login Security Landscape
 
-This repository contains the code related to our paper "To Auth or Not To Auth? A Comparative Analysis of the Pre- and Post-Login Security Landscape" [IEEE S&P 2024](TODO link).
+This repository contains the code of our paper "To Auth or Not To Auth? A Comparative Analysis of the Pre- and Post-Login Security Landscape" [IEEE S&P 2024](TODO link).
 
 Our code is organized into three distinct modules that can all run independently or together.
 For a high-level description of the modules please see below. Detailed instructions for each module can be found in the respective folders.
 
 ## Setup
 
-Run `git clone https://github.com/cispa/login-security-landscape --recurse-submodules` then follow the instructions in the respective subproject folders.
+Run `git clone https://github.com/cispa/login-security-landscape --recurse-submodules`, then follow the instructions in the respective subproject folders.
 
 ## [AccountFramework](AccountFramework/README.md)
 
@@ -19,12 +19,12 @@ Features:
 - Passwordmanager-supported registration task routines (requires manual input)
 - Automatic login handling (with manual fallback option)
 - Automatic login validation (with manual fallback option)
-- Session and Account Management APIs and database
+- Session and Account Management APIs for experiments
 
 ## [PythonCrawler](PythonCrawler/README.md)
 
 The PythonCrawler is a modular crawling framework based on Playwright and implemented in Python.
-The provided modules `collectheaders` and `inclusionissues` correspond to experiments `5.2 Security Headers` and `5.3 JavaScript Inclusions` in the paper.
+The provided modules `HeadersExperiment` and `InclusionIssues` correspond to experiments `5.2 Security Headers` and `5.3 JavaScript Inclusions` in the paper.
 
 
 ## [TypeScriptCrawler](TypeScriptCrawler/README.md)

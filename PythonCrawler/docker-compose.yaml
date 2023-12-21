@@ -15,8 +15,8 @@ services:
       - vnc_password
       - db_password
     ports:
-      - '55902:5900'
-      - '58888:8888' # Jupyer Lab Server; TODO: maybe move to an optional container as well?
+      - '55902:5900' # VNC
+      - '58888:8888' # Jupyer Lab Server
     networks:
       - accf-custom
       - db

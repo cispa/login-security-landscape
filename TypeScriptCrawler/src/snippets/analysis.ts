@@ -7,18 +7,20 @@ import { sequelize } from "../database/db";
 import { Logging } from "../utils/logging";
 
 /**
+ * For a real analysis, it is import to prune invalid results such as failed tasks due to network issues by sanitizing the data first.
+ */
+
+/**
  * Analysis code for cxss experiment
  */
 const cxssAnalysis = async () => {
     let visitedSubjects = await sequelize.query("SELECT COUNT(*) as count FROM subjects WHERE status = 'VISITED';")
     let totalSubjects = await sequelize.query("SELECT COUNT(*) as count FROM subjects;")
-    Logging.info(`Visited ${visitedSubjects[0][0].count} / ${totalSubjects[0][0].count} successfully.`)
+    Logging.info(`Visited ${visitedSubjects[0][0].count} / ${totalSubjects[0][0].count} URLs successfully.`)
 
     // Access the table structure from the method setup in module/cxss.ts
     let confirmedExploits = await sequelize.query("SELECT COUNT(*) as count FROM cxss_exploit WHERE status = 1;")
     Logging.info(`Found ${confirmedExploits[0][0].count} confirmed exploits in the crawl.`)
-
-    // TODO: More meaningful analysis...
 }
 
 /**
@@ -27,13 +29,12 @@ const cxssAnalysis = async () => {
 const pmsecurityAnalysis = async () => {
     let visitedSubjects = await sequelize.query("SELECT COUNT(*) as count FROM subjects WHERE status = 'VISITED';")
     let totalSubjects = await sequelize.query("SELECT COUNT(*) as count FROM subjects;")
-    Logging.info(`Visited ${visitedSubjects[0][0].count} / ${totalSubjects[0][0].count} successfully.`)
+    Logging.info(`Visited ${visitedSubjects[0][0].count} / ${totalSubjects[0][0].count} URLs successfully.`)
 
     // Access the table structure from the method setup in module/pmsecurity.ts
     let numberOfHandlers = await sequelize.query("SELECT COUNT(*) as count FROM handler;")
     Logging.info(`Found ${numberOfHandlers[0][0].count} handlers in total.`)
 
-    // TODO: More meaningful analysis...
 }
 
 (async () => {

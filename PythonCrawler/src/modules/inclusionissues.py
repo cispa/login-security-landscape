@@ -20,8 +20,7 @@ from utils import get_url_full_with_query_fragment
 class Script(BaseModel):
     # md5 hash of script source
     source_hash = TextField(unique = True)
-    # first 200 characters of the script source
-    # TODO: maybe configure the limit or ignore it
+    # (Truncated) content of the script source
     source = TextField()
     # sha1 hash
     sha1 = TextField(unique = True)
@@ -169,6 +168,7 @@ class InclusionIssues(Login):
         script = Script.get_or_create(
             source_hash = shash,
             sha1 = abc_sha1(None, source),
+            # Save first 5000 chars of the script
             source = source[:5000],
             retire_js = retire_js_result
         )[0]
