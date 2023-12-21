@@ -14,7 +14,7 @@ def add_site(site, url, rank, job):
 
 def main(job: str):
     add_site('example.com', 'https://example.com/', 0, job)
-    add_site('wikipedia.org', 'https://www.wikipedia.org/', 1, job)
+    add_site('ieee-security.org', 'https://sp2024.ieee-security.org/', 1, job)
     add_site('arxiv.org', 'https://arxiv.org/', 2, job)
     return 0
 
