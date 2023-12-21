@@ -48,8 +48,6 @@ class CollectURLs(Module):
         if Config.SAME_ETLDP1 and (self.crawler.site != parsed_url_final.fld):
             return
 
-        # TODO: Check for same entity
-
         # Get all <a> tags with a href
         try:
             links: Locator = self.crawler.page.locator('a[href]')
@@ -77,8 +75,6 @@ class CollectURLs(Module):
             # Check for same ETLD+1
             if Config.SAME_ETLDP1 and self.crawler.site != parsed_link.fld:
                 continue
-
-            # TODO: Check for same entity
 
             # Check if URL was seen before
             parsed_link_full: str = get_url_full(parsed_link)
