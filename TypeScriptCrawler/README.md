@@ -24,8 +24,8 @@ Please follow the following steps to setup the crawler. We highly recommend conf
     - Postgres database containing crawl data, exposed on port `55434` with the password being stored in [secrets/db_password.txt](secrets/db_password.txt)
     - Every time `experiment.sh` is executed within the `typescript-crawler`, a new database with the name `{cxss|pmsecurity}___{timestamp}` is created.
 
-[!IMPORTANT]
-Since our build process for the cxss experiment fetches specific dependencies and builds [Foxhound](https://github.com/SAP/project-foxhound), it is **necessary** to configure all relevant options in the [docker-compose.yaml](docker-compose.yaml) prior to building the container. Since the container has to clone the foxhound repository, install necessary dependencies and build Firefox, expect this process to take longer (around 1 hour).
+> [!IMPORTANT]
+> Since our build process for the cxss experiment fetches specific dependencies and builds [Foxhound](https://github.com/SAP/project-foxhound), it is **necessary** to configure all relevant options in the [docker-compose.yaml](docker-compose.yaml) prior to building the container. Since the container has to clone the foxhound repository, install necessary dependencies and build Firefox, expect this process to take longer (around 1 hour).
 
 ### Setup
 
@@ -69,8 +69,8 @@ Optional:
 Running the experiment will first create the necessary database as well as data path for crawl artifacts. Additionally, it builds the crawler code, prepares the database and spawns all crawlers. Lastly, if not in DEMO mode, it starts requesting sessions from the account framework.
 
 
-[!NOTE]
-The crawl artifacts, logs and the screenshots are stored at `/typescript-crawler-data/crawl_[TIMESTAMP]`, where `TIMESTAMP` is the time of starting the crawl.
+> [!NOTE]
+> The crawl artifacts, logs and the screenshots are stored at `/typescript-crawler-data/crawl_[TIMESTAMP]`, where `TIMESTAMP` is the time of starting the crawl.
 
 #### Stopping an experiment
 
@@ -80,8 +80,8 @@ Before stopping the experiment, make sure that all crawlers are inactive. The sc
 ./experiment-stop.sh
 ```
 
-[!CAUTION]
-Terminating the experiment when crawlers are writing to the database can lead to inconsistent data points, which then need to be removed before analysis.
+> [!CAUTION]
+> Terminating the experiment when crawlers are writing to the database can lead to inconsistent data points, which then need to be removed before analysis.
 
 #### Running the sample analysis
 
@@ -91,8 +91,8 @@ In the file [src/snippets/analysis.ts](src/snippets/analysis.ts) we prepared cod
 ./experiment-analysis.sh
 ```
 
-[!WARNING]
-Before performing the analysis, make sure to kill all running processes relating to the crawl. 
+> [!WARNING]
+> Before performing the analysis, make sure to kill all running processes relating to the crawl. 
 
 ## Inventory
 
