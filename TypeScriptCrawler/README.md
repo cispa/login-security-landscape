@@ -96,7 +96,7 @@ In the file [src/snippets/analysis.ts](src/snippets/analysis.ts) we prepared cod
 
 ## Inventory
 
-- `secrets/`: Settings and tokens for the Python Crawler that should not be shared
+- `secrets/`: Settings and tokens for the TypeScript Crawler that should not be shared
   - [db_password.txt](secrets/db_password.txt): The database password file
   - [vnc_password.txt](secrets/vnc_password.txt): The VNC password file
 - `src/`: Crawler source code
