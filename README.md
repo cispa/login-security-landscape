@@ -1,6 +1,6 @@
 # To Auth or Not To Auth? A Comparative Analysis of the Pre- and Post-Login Security Landscape
 
-This repository contains the code of our paper "To Auth or Not To Auth? A Comparative Analysis of the Pre- and Post-Login Security Landscape" [IEEE S&P 2024](https://swag.cispa.saarland/papers/rautenstrauch2024auth.pdf).
+This repository contains the code of our paper "To Auth or Not To Auth? A Comparative Analysis of the Pre- and Post-Login Security Landscape" [IEEE S&P 2024](https://www.computer.org/csdl/proceedings-article/sp/2024/313000a094/1Ub232sRVao).
 
 Our code is organized into three distinct modules that can all run independently or together.
 For a high-level description of the modules please see below. Detailed instructions for each module can be found in the respective folders.
@@ -38,7 +38,7 @@ If there are questions about our tools or paper, please either file an issue or 
 
 ## Research Paper
 
-The paper is available at the [IEEE Computer Society Digital Library](TODO). 
+The paper is available at the [IEEE Computer Society Digital Library](https://www.computer.org/csdl/proceedings-article/sp/2024/313000a094/1Ub232sRVao). 
 You can cite our work with the following BibTeX entry:
 ```latex
 @inproceedings{rautenstrauch2024auth,
@@ -46,6 +46,6 @@ You can cite our work with the following BibTeX entry:
  booktitle = {IEEE Symposium on Security and Privacy},
  title = {{To Auth or Not To Auth? A Comparative Analysis of the Pre- and Post-Login Security Landscape}},
  year = {2024},
- doi = {TODO},
+ doi = {10.1109/SP54263.2024.00094},
 }
 ```
