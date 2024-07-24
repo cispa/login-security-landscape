@@ -51,7 +51,7 @@ Before using the account framework, some manual steps within the containers have
         - Run `docker compose restart` if the setting changed
     - With Bitwarden:
         - Create a Bitwarden account at: https://vault.bitwarden.com/#/register
-        - Create an API key and copy `bw_client_secret`, `bw_client_id` and `bw_password`` (https://vault.bitwarden.com/#/settings/security/security-keys) to [bw_env.sh](secrets/bw_env.sh)
+        - Create an API key and copy `bw_client_secret`, `bw_client_id` and `bw_password` (https://vault.bitwarden.com/#/settings/security/security-keys) to [bw_env.sh](secrets/bw_env.sh)
         - Run `docker compose restart` if the secrets changed
 - Connect to the manual worker container with any VNC viewer on port: `55901` and password [vnc_password.txt](secrets/vnc_password.txt)
 - Open a terminal on the virtual screen: right click -> applications -> shells -> bash (maximize)
