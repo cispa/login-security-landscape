@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: If you use this software, please cite both the article from preferred-citation and the software itself.
+authors:
+  - family-names: Rautenstrauch
+    given-names: Jannis
+  - family-names: Mitkov
+    given-names: Metodi
+  - family-names: Helbrecht
+    given-names: Thomas
+  - family-names: Hetterich
+    given-names: Lorenz
+  - family-names: Stock
+    given-names: Ben
+title: To Auth or Not To Auth? A Comparative Analysis of the Pre- and Post-Login Security Landscape
+version: 1.0.0
+doi: 10.1109/SP54263.2024.00094
+date-released: '2024-09-26'
+preferred-citation:
+  authors:
+    - family-names: Rautenstrauch
+      given-names: Jannis
+    - family-names: Mitkov
+      given-names: Metodi
+    - family-names: Helbrecht
+      given-names: Thomas
+    - family-names: Hetterich
+      given-names: Lorenz
+    - family-names: Stock
+      given-names: Ben
+  title: To Auth or Not To Auth? A Comparative Analysis of the Pre- and Post-Login Security Landscape
+  doi: 10.1109/SP54263.2024.00094
+  type: conference-paper
+  year: '2024'
+  collection-title: IEEE Symposium on Security and Privacy
+  conference: {}
+  publisher: {}
