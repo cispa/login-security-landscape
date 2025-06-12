@@ -15,9 +15,16 @@ source $IDENTITY_FILE
 # Start Account Framework API + Automated Workers
 if [[ -z "$WORKER" ]]; then
     # Bitwarden: Login, start HTTP API
-    if [[ "$use_bitwarden" == true ]]; then
+    if [[ "$use_bitwarden" == "True" ]]; then
         bw login --apikey
         bw serve --port 9999 --hostname 0.0.0.0 &
+        # Wait for `bw serve` to start listening
+        for i in {1..20}; do
+            if lsof -i TCP:9999 | grep LISTEN; then
+                break
+            fi
+            sleep 0.5
+        done
         # Unlock BW API
         curl -X POST http://localhost:9999/unlock -d "{\"password\": \"${BW_PASSWORD}\"}" -H 'Content-Type: application/json'
     fi
