@@ -47,7 +47,7 @@ def setup_gmail():
     subprocess.call(["playwright", "open", "https://mail.google.com", "--browser=firefox", "--save-storage=auth/0-gmail.json"])
 
 with sync_playwright() as playwright:
-    if os.getenv("use_bitwarden") == "True":
+    if os.getenv("use_bitwarden") == "true":
         # Create the bitwarden identity
         update_or_create_identity() 
 

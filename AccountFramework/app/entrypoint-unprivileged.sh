@@ -15,7 +15,7 @@ source $IDENTITY_FILE
 # Start Account Framework API + Automated Workers
 if [[ -z "$WORKER" ]]; then
     # Bitwarden: Login, start HTTP API
-    if [[ "$use_bitwarden" == "True" ]]; then
+    if [[ "$use_bitwarden" == true ]]; then
         bw login --apikey
         bw serve --port 9999 --hostname 0.0.0.0 &
         # Wait for `bw serve` to start listening

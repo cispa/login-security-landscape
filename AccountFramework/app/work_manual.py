@@ -204,7 +204,7 @@ def open_browser(
     session: str, url: str, folder: str, recording: bool
 ) -> Optional[Exception]:
     """Either open browser with bitwarden or open a default playwright browser."""
-    if os.getenv("use_bitwarden") == "True":
+    if os.getenv("use_bitwarden") == "true":
         with sync_playwright() as playwright:
             try:
                 run_bw_browser(playwright, task_type=folder, session=session, url=url)
@@ -437,7 +437,7 @@ def register(task: db.RegisterTask):
     session: str = f"0-{datetime.now().strftime('%Y-%m-%d')}-{site}"
 
     # Create or update bitwarden credentials
-    if os.getenv("use_bitwarden") == "True":
+    if os.getenv("use_bitwarden") == "true":
         update_or_create_login([site, username, password, email])
 
     # Check for existing registration page in DB
@@ -529,7 +529,7 @@ def register(task: db.RegisterTask):
     ).where(db.Account.id.in_([account])).execute()
     task.account = account
     # Update bitwarden credentials (update does not matter if nothing got changed)
-    if os.getenv("use_bitwarden") == "True":
+    if os.getenv("use_bitwarden") == "true":
         update_or_create_login(account)
 
     # Schedule a new auto login task if registration was successful
