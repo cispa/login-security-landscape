@@ -40,7 +40,7 @@ Prerequisites on the host system (tested on MacOS 14 and Ubuntu 22.04, similar s
 - Run `docker compose up -d --build`. After a successful build three containers are running:
     - `accf-auto`: Account Framework API + automated worker, API is running on port `5555`, VNC is running on port `55900` with password [vnc_password.txt](secrets/vnc_password.txt)
     - `worker1`: Container for the first manual worker, VNC is running on port `55901` with password [vnc_password.txt](secrets/vnc_password.txt)
-    - `db`: Postgres Database, running on port `55433` on the host (`5432` within docker) with username `postgres` and password [db_password.txt](secrets/db_password.txt). The main database is called `accounts`.
+    - `db`: Postgres Database, running on port `55432` on the host (`5432` within docker) with username `postgres` and password [db_password.txt](secrets/db_password.txt). The main database is called `accounts`.
 
 ### Setup
 
