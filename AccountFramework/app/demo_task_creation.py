@@ -147,8 +147,9 @@ if __name__ == "__main__":
     )
 
     # Create an auto + manual login task on https://demo.dashpress.io
-    test_login()
-    create_auto_login_task(identity)
+    # TODO: Demo.dashpress.io is not working anymore, replace with another similar site
+    # test_login()
+    # create_auto_login_task(identity)
 
     # Create a manual registration task on https://stable.demo.geonode.org/
     create_manual_registration_task(identity)
